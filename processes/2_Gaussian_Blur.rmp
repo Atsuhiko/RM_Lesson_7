@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="6.0.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image" width="90" x="246" y="34">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\第７回\data\socha_small.jpg"/>
+        <parameter key="set_mask" value="false"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:gaussian_blur" compatibility="1.4.001" expanded="true" height="68" name="Gaussian Blur" width="90" x="381" y="34">
+        <parameter key="strength" value="2.0"/>
+        <parameter key="iterations" value="1"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:write_image" compatibility="1.4.001" expanded="true" height="68" name="Write Image to File" width="90" x="516" y="34">
+        <parameter key="type" value="Absolute"/>
+        <parameter key="type_of_ext" value=".jpg"/>
+        <parameter key="file_name" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\第７回\data\socha_small_result.jpg"/>
+        <parameter key="multi_image" value="false"/>
+        <parameter key="number_of_digits" value="3"/>
+        <parameter key="force_overwrite" value="false"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image (2)" width="90" x="246" y="140">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\第７回\data\socha_small.jpg"/>
+        <parameter key="set_mask" value="false"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_color_image" compatibility="1.4.001" expanded="true" height="68" name="Open Color Image" width="90" x="246" y="242">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\第７回\data\socha_small.jpg"/>
+        <parameter key="set_mask" value="false"/>
+        <parameter key="force_conversion" value="false"/>
+      </operator>
+      <connect from_op="Open Grayscale Image" from_port="grayscale image plus" to_op="Gaussian Blur" to_port="image plus"/>
+      <connect from_op="Gaussian Blur" from_port="image plus" to_op="Write Image to File" to_port="image plus"/>
+      <connect from_op="Write Image to File" from_port="image plus" to_port="result 1"/>
+      <connect from_op="Open Grayscale Image (2)" from_port="grayscale image plus" to_port="result 2"/>
+      <connect from_op="Open Color Image" from_port="color image plus" to_port="result 3"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>

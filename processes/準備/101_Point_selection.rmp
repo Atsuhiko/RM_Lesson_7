@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="6.0.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image" width="90" x="45" y="30">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\brain_cross_section.jpg"/>
+        <parameter key="set_mask" value="true"/>
+        <parameter key="fitness" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\brain_cross_section.jpg"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:poi_generator" compatibility="1.4.001" expanded="true" height="68" name="poi_generator" width="90" x="312" y="30">
+        <parameter key="Creation method" value="Load from file"/>
+        <parameter key="Min x corodinates" value="0"/>
+        <parameter key="Min y corodinates" value="0"/>
+        <parameter key="Max x corodinates" value="800"/>
+        <parameter key="Max y corodinates" value="600"/>
+        <parameter key="Points count" value="500"/>
+        <parameter key="Generation method" value="Random"/>
+        <parameter key="local_random_seed" value="-1"/>
+        <parameter key="File" value="c:\workspaceRM5\ImageProcessingExtension\usage_examples\tutorial-im\11_points.xml"/>
+        <list key="Points Table"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:WritePoints" compatibility="1.4.001" expanded="true" height="68" name="WritePoints" width="90" x="447" y="30">
+        <parameter key="FileName" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\11_points.xml..xml"/>
+      </operator>
+      <connect from_op="Open Grayscale Image" from_port="grayscale image plus" to_op="poi_generator" to_port="img"/>
+      <connect from_op="poi_generator" from_port="points of interest" to_op="WritePoints" to_port="Pts In"/>
+      <connect from_op="WritePoints" from_port="points" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

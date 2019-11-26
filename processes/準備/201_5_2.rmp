@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="6.0.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="loop_files" compatibility="6.4.000" expanded="true" height="82" name="Loop Files" width="90" x="246" y="30">
+        <parameter key="directory" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\images_a"/>
+        <parameter key="filter" value=".*\.(jpg|png|gif)"/>
+        <parameter key="filtered_string" value="file name (last part of the path)"/>
+        <parameter key="file_name_macro" value="file_name"/>
+        <parameter key="file_path_macro" value="file_path"/>
+        <parameter key="parent_path_macro" value="parent_path"/>
+        <parameter key="recursive" value="false"/>
+        <parameter key="iterate_over_files" value="true"/>
+        <parameter key="iterate_over_subdirs" value="false"/>
+        <process expanded="true">
+          <operator activated="true" class="imageprocessing:open_color_image" compatibility="1.4.001" expanded="true" height="68" name="Open Color Image" width="90" x="45" y="30">
+            <parameter key="filename" value="%{file_path}"/>
+            <parameter key="set_mask" value="false"/>
+            <parameter key="force_conversion" value="true"/>
+          </operator>
+          <operator activated="true" class="imageprocessing:histogram_equalize" compatibility="1.4.001" expanded="true" height="68" name="HEQ" width="90" x="180" y="30">
+            <parameter key="algorithm" value="equalize"/>
+            <parameter key="saturation" value="2.0"/>
+          </operator>
+          <operator activated="true" class="imageprocessing:write_image" compatibility="1.4.001" expanded="true" height="68" name="Write Image to File" width="90" x="315" y="30">
+            <parameter key="type" value="Absolute"/>
+            <parameter key="type_of_ext" value=".png"/>
+            <parameter key="file_name" value="c:\images_a_equalized/%{file_name}"/>
+            <parameter key="multi_image" value="false"/>
+            <parameter key="number_of_digits" value="3"/>
+            <parameter key="force_overwrite" value="false"/>
+          </operator>
+          <connect from_op="Open Color Image" from_port="color image plus" to_op="HEQ" to_port="image plus"/>
+          <connect from_op="HEQ" from_port="image plus" to_op="Write Image to File" to_port="image plus"/>
+          <connect from_op="Write Image to File" from_port="image plus" to_port="out 1"/>
+          <portSpacing port="source_file object" spacing="0"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Loop Files" from_port="out 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

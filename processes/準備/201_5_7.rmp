@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="6.0.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="imageprocessing:multiple_color_image_opener" compatibility="1.4.001" expanded="true" height="68" name="MCIO" width="90" x="179" y="30">
+        <parameter key="datamanagement" value="double_array"/>
+        <list key="images">
+          <parameter key="MY_CLASS_A" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\images_a"/>
+          <parameter key="MY_CLASS_B" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\images_b"/>
+        </list>
+        <parameter key="auto_adjust_contrast" value="false"/>
+        <parameter key="set_mask" value="false"/>
+        <parameter key="mask_foldername" value="fitness"/>
+        <parameter key="extension" value="ALL IMAGES"/>
+        <parameter key="assign_label" value="true"/>
+        <parameter key="filter_by_orientation" value="false"/>
+        <parameter key="orientation" value="SAGITTAL"/>
+        <parameter key="include_unknown_orientation" value="false"/>
+        <parameter key="ignore_errors" value="false"/>
+        <process expanded="true">
+          <operator activated="true" class="imageprocessing:global_feature_extraction" compatibility="1.4.001" expanded="true" height="60" name="Global Feature Extractor from a Single Image" width="90" x="45" y="30">
+            <parameter key="include_position_filename" value="true"/>
+            <process expanded="true">
+              <operator activated="true" class="imageprocessing:statistics" compatibility="1.4.001" expanded="true" height="60" name="Global statistics" width="90" x="45" y="30">
+                <parameter key="Mean" value="true"/>
+                <parameter key="Median" value="true"/>
+                <parameter key="Standard Deviation" value="true"/>
+                <parameter key="Skewness" value="true"/>
+                <parameter key="Kurtosis" value="true"/>
+                <parameter key="Peak" value="true"/>
+                <parameter key="Min Gray Value" value="true"/>
+                <parameter key="Max Gray Value" value="true"/>
+                <parameter key="Center of Mass" value="false"/>
+                <parameter key=" Normalized Center of Mass" value="true"/>
+                <parameter key="Area Fraction" value="true"/>
+                <parameter key="Edginess" value="true"/>
+                <parameter key="Thickness" value="1"/>
+              </operator>
+              <connect from_port="color image plus 1" to_op="Global statistics" to_port="color image plus"/>
+              <connect from_op="Global statistics" from_port="features" to_port="feature 1"/>
+              <portSpacing port="source_color image plus 1" spacing="0"/>
+              <portSpacing port="source_color image plus 2" spacing="0"/>
+              <portSpacing port="sink_feature 1" spacing="0"/>
+              <portSpacing port="sink_feature 2" spacing="0"/>
+            </process>
+          </operator>
+          <connect from_port="color image plus" to_op="Global Feature Extractor from a Single Image" to_port="color image plus"/>
+          <connect from_op="Global Feature Extractor from a Single Image" from_port="example set" to_port="Example set"/>
+          <portSpacing port="source_color image plus" spacing="0"/>
+          <portSpacing port="sink_Example set" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="decision_tree" compatibility="9.3.001" expanded="true" height="82" name="Decision Tree" width="90" x="313" y="30">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_gain" value="0.1"/>
+        <parameter key="maximal_depth" value="20"/>
+        <parameter key="confidence" value="0.25"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+        <parameter key="no_pre_pruning" value="false"/>
+        <parameter key="no_pruning" value="false"/>
+      </operator>
+      <connect from_op="MCIO" from_port="example set" to_op="Decision Tree" to_port="training set"/>
+      <connect from_op="Decision Tree" from_port="model" to_port="result 1"/>
+      <connect from_op="Decision Tree" from_port="exampleSet" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>

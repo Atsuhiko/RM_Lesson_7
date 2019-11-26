@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="6.0.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="imageprocessing:open_color_image" compatibility="1.4.001" expanded="true" height="68" name="Open Color Image" width="90" x="179" y="34">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\第７回\data\duck.jpg"/>
+        <parameter key="set_mask" value="false"/>
+        <parameter key="force_conversion" value="true"/>
+      </operator>
+      <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="124" name="Multiply" width="90" x="313" y="34"/>
+      <operator activated="true" class="imageprocessing:color_model_operator" compatibility="1.4.001" expanded="true" height="68" name="ClrToGS Red" width="90" x="514" y="30">
+        <parameter key="Color component" value="Red"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:lut_table" compatibility="1.4.001" expanded="true" height="68" name="LUT Red" width="90" x="715" y="34">
+        <parameter key="Type of LUT" value="Predefined"/>
+        <parameter key="Predefined" value="fire"/>
+        <parameter key="1st color" value="0,0,255"/>
+        <parameter key="2nd color" value="0,255,0"/>
+        <parameter key="3rd color" value="255,0,0"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:color_model_operator" compatibility="1.4.001" expanded="true" height="68" name="ClrToGS Green" width="90" x="514" y="120">
+        <parameter key="Color component" value="Green"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:color_model_operator" compatibility="1.4.001" expanded="true" height="68" name="ClrToGS Green Blue" width="90" x="514" y="210">
+        <parameter key="Color component" value="Blue"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:lut_table" compatibility="1.4.001" expanded="true" height="68" name="LUT Green" width="90" x="715" y="124">
+        <parameter key="Type of LUT" value="Predefined"/>
+        <parameter key="Predefined" value="fire"/>
+        <parameter key="1st color" value="0,0,255"/>
+        <parameter key="2nd color" value="0,255,0"/>
+        <parameter key="3rd color" value="255,0,0"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:lut_table" compatibility="1.4.001" expanded="true" height="68" name="LUT Blue" width="90" x="715" y="214">
+        <parameter key="Type of LUT" value="Predefined"/>
+        <parameter key="Predefined" value="fire"/>
+        <parameter key="1st color" value="0,0,255"/>
+        <parameter key="2nd color" value="0,255,0"/>
+        <parameter key="3rd color" value="255,0,0"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_color_image" compatibility="1.4.001" expanded="true" height="68" name="Open Color Image (2)" width="90" x="782" y="340">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\第７回\data\duck.jpg"/>
+        <parameter key="set_mask" value="false"/>
+        <parameter key="force_conversion" value="true"/>
+      </operator>
+      <connect from_op="Open Color Image" from_port="color image plus" to_op="Multiply" to_port="input"/>
+      <connect from_op="Multiply" from_port="output 1" to_op="ClrToGS Red" to_port="color image plus"/>
+      <connect from_op="Multiply" from_port="output 2" to_op="ClrToGS Green" to_port="color image plus"/>
+      <connect from_op="Multiply" from_port="output 3" to_op="ClrToGS Green Blue" to_port="color image plus"/>
+      <connect from_op="ClrToGS Red" from_port="grayscale image plus" to_op="LUT Red" to_port="grayscale image plus"/>
+      <connect from_op="LUT Red" from_port="color image" to_port="result 1"/>
+      <connect from_op="ClrToGS Green" from_port="grayscale image plus" to_op="LUT Green" to_port="grayscale image plus"/>
+      <connect from_op="ClrToGS Green Blue" from_port="grayscale image plus" to_op="LUT Blue" to_port="grayscale image plus"/>
+      <connect from_op="LUT Green" from_port="color image" to_port="result 2"/>
+      <connect from_op="LUT Blue" from_port="color image" to_port="result 3"/>
+      <connect from_op="Open Color Image (2)" from_port="color image plus" to_port="result 4"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+      <portSpacing port="sink_result 5" spacing="0"/>
+    </process>
+  </operator>
+</process>

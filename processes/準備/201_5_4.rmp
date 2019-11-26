@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="6.0.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image" width="90" x="246" y="136">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\duck_mask.jpg"/>
+        <parameter key="set_mask" value="false"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image (2)" width="90" x="246" y="30">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\duck.jpg"/>
+        <parameter key="set_mask" value="false"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:combine_images" compatibility="1.4.001" expanded="true" height="82" name="Image Combinator" width="90" x="581" y="30">
+        <parameter key="action" value="min"/>
+        <parameter key="swap_operands" value="false"/>
+        <parameter key="ratio" value="0.5"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image (3)" width="90" x="581" y="293">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\duck_mask.jpg"/>
+        <parameter key="set_mask" value="false"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Grayscale Image (4)" width="90" x="581" y="187">
+        <parameter key="filename" value="C:\Users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\RapiMiner Book\Chapter 20\Datasets\duck.jpg"/>
+        <parameter key="set_mask" value="false"/>
+      </operator>
+      <connect from_op="Open Grayscale Image" from_port="grayscale image plus" to_op="Image Combinator" to_port="grayscale image plus2"/>
+      <connect from_op="Open Grayscale Image (2)" from_port="grayscale image plus" to_op="Image Combinator" to_port="grayscale image plus"/>
+      <connect from_op="Image Combinator" from_port="grayscale image plus out" to_port="result 1"/>
+      <connect from_op="Open Grayscale Image (3)" from_port="grayscale image plus" to_port="result 3"/>
+      <connect from_op="Open Grayscale Image (4)" from_port="grayscale image plus" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.3.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="imageprocessing:open_color_image" compatibility="1.4.001" expanded="true" height="68" name="Open Color Image" width="90" x="179" y="34">
+        <parameter key="filename" value="D:\users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\mol-cell-biol-bsc-banner.jpg"/>
+        <parameter key="set_mask" value="true"/>
+        <parameter key="fitness" value="D:\users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\mol-cell-biol-bsc-banner.jpg"/>
+        <parameter key="force_conversion" value="true"/>
+      </operator>
+      <operator activated="true" class="imageprocessing:open_image" compatibility="1.4.001" expanded="true" height="68" name="Open Gray-scale Image" width="90" x="179" y="136">
+        <parameter key="filename" value="D:\users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\brain_cross_section.jpg"/>
+        <parameter key="set_mask" value="true"/>
+        <parameter key="fitness" value="D:\users\301518\Desktop\ノンコーティングで機械学習勉強会\Image_Minig\brain_cross_section.jpg"/>
+      </operator>
+      <connect from_op="Open Color Image" from_port="color image plus" to_port="result 1"/>
+      <connect from_op="Open Gray-scale Image" from_port="grayscale image plus" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>
